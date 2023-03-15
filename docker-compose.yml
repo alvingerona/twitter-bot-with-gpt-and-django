@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+
+  tweeterbot_app:
+    container_name: tweeterbot_app
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        SERVER_UID: ${SERVER_UID}
+        SERVER_USER: ${SERVER_USER}
+    image: tweeterbot_app
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - '8012:8000'
+    depends_on:
+      - tweeterbot_db
+    networks:
+      - tweeterbot_db-network
+
+  tweeterbot_db:
+    container_name: tweeterbot_db
+    platform: linux/amd64 #for platform error on Apple M1 chips
+    restart: unless-stopped
+    image: library/postgres:14
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - tweeterbot_db-data:/var/lib/postgresql/data/
+    ports:
+      - '54322:5432'
+    networks:
+      - tweeterbot_db-network
+
+volumes:
+  tweeterbot_db-data:
+
+networks:
+  tweeterbot_db-network:
+    name: tweeterbot_db-network
+    driver: bridge
