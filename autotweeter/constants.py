@@ -13,7 +13,7 @@ GPT_RESULT_COUNT = 5
 
 # when set to True the makeCompletion will not do actual request
 # to the API instead it will use this dummy result from variable GPT_TEST_RESULTS
-GPT_TEST_ONLY = True
+GPT_TEST_ONLY = False
 
 # sample result from completion API
 GPT_TEST_RESULTS = {

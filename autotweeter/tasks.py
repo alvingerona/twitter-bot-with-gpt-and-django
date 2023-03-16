@@ -9,7 +9,7 @@ from .services import makeTweet
 def post_tweet():
     print("sending tweet")
     try:
-        time_threshold = datetime.now() - timedelta(hours=5)
+        time_threshold = datetime.now() - timedelta(hours=1)
         tweet = Tweet.objects.filter(
             # take only one, we want to post tween only once every certain time
             created_at__lt=time_threshold,
