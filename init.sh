@@ -1,6 +1,11 @@
 #!/bin/sh
 
 #
+# Run migrate on every start 
+#
+python manage.py migrate
+
+#
 # Start task scheduler
 #
 celery -A autotweeterproject beat -l info --detach
