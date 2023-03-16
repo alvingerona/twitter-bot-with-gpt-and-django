@@ -15,11 +15,19 @@ $ pipenv shell
 pipenv install [PACKAGE]
 ```
 
-## How to start the project?
+### How to start the project?
 Run the command
 ```
 docker compose up -d --build
 ```
+
+### On the very first running of the app on the server
+Create super admin user, do exec to tweeterbot_app and run the command:
+```
+python manage.py createsuperuser
+```
+
+This will ask for username and password of the super admin user.
 
 ### Access website
 http://localhost:8012/
