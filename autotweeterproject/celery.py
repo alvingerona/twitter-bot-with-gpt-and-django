@@ -18,7 +18,7 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.conf.beat_schedule = {
     'post-tweet': {
         'task': 'autotweeter.tasks.post_tweet',
-        'schedule': crontab(minute='*/1')
+        'schedule': crontab(minute='*/15')
     },
 }
 
