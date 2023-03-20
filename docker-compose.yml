@@ -15,6 +15,7 @@ services:
     working_dir: /app
     volumes:
       - ./:/app
+      - ./celery_worker.log:/var/log/celery_worker.log
     ports:
       - '8012:8000'
     depends_on:

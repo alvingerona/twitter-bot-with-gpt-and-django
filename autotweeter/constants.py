@@ -6,8 +6,10 @@ PROMPT_LIST = [
     "Advice for aspiring developers, such as how to get started with programming or tips for improving coding skills.",
     "Your personal experiences with programming, including challenges you've faced and how you overcame them.",
     "Collaboration opportunities with other developers, such as hackathons or open source projects.",
-    "Thought pieces on the role of technology in society and the ethical implications of programming and software development."
+    "Thought pieces on the role of technology in society and the ethical implications of programming and software development.",
 ]
+
+POST_PROMPT = "Tweet must have maximum 280 characters. Add hastag #fullstack #programming"
 
 GPT_RESULT_COUNT = 5
 

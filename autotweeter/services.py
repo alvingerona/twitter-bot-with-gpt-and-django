@@ -2,7 +2,8 @@ import os
 import tweepy
 import openai
 import random
-from .constants import PROMPT_LIST, GPT_RESULT_COUNT, GPT_TEST_RESULTS, GPT_TEST_ONLY
+from datetime import datetime, timedelta
+from .constants import PROMPT_LIST, GPT_RESULT_COUNT, GPT_TEST_RESULTS, GPT_TEST_ONLY, POST_PROMPT
 from .models import Tweet
 
 """
@@ -24,6 +25,35 @@ def makeTweet(text: str):
     api = tweeterInstanceOfAPI()
 
     return api.update_status(text)
+
+
+def postMyTweet():
+    """
+    Post tweet that has been created in tweets table
+    """
+
+    time_threshold = datetime.now() - timedelta(hours=1)
+    tweet = Tweet.objects.filter(
+        # take only one, we want to post tweet only once every certain
+        # time it was created,
+        created_at__lt=time_threshold,
+        # take those status is allowed to be tweeted
+        status=Tweet.STATUS_ALLOWED,
+        # take those are not yet being tweeted(tweeted_at = null)
+        tweeted_at__isnull=True
+    ).first()
+
+    if(tweet):
+        # post tweet
+        makeTweet(tweet.body)
+
+        # mark as tweeted
+        tweet.tweeted_at = datetime.now()
+        tweet.save()
+
+        return True
+
+    return False
 
 
 def openaiInstanceOfAPI():
@@ -57,7 +87,8 @@ def makeCompletion():
     api = openaiInstanceOfAPI()
 
     # chooce 1 randomly from the list of prompts
-    prompt = "Write a tweet about: " + random.choice(PROMPT_LIST)
+    prompt = "Write a tweet about: " + \
+        random.choice(PROMPT_LIST) + " " + POST_PROMPT
 
     # request for a completion from the OpenAPI
     results = api.Completion.create(
