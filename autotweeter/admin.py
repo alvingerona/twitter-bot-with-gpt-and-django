@@ -4,7 +4,6 @@ from django.urls import path
 from django.http import HttpResponseRedirect
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
-
 from . import models
 from .services import makeCompletion
 
@@ -23,7 +22,7 @@ def generateTweets(request):
 
 
 class TweetAdmin(admin.ModelAdmin):
-    list_display = ['id', 'body_summary',
+    list_display = ['id', 'body_summary', 'character_len',
                     'status', 'is_twitted_label', 'created_at']
     list_editable = ['status']
 
@@ -48,6 +47,14 @@ class TweetAdmin(admin.ModelAdmin):
             return "Yes"
 
         return "No"
+
+    @admin.display(description="Length")
+    def character_len(self, tweet):
+        """
+        Compute number of character same as tweet character counter
+        """
+
+        return len(tweet.body)
 
 
 # Register models in admin
