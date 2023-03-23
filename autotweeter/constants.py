@@ -7,6 +7,8 @@ PROMPT_LIST = [
     "Your personal experiences with programming, including challenges you've faced and how you overcame them.",
     "Collaboration opportunities with other developers, such as hackathons or open source projects.",
     "Thought pieces on the role of technology in society and the ethical implications of programming and software development.",
+    "The challenges of being a fullstack developer: Discuss some of the difficulties you've faced in your role and how you've overcome them.",
+    "One of many things needed to successfully complete a project as a fullstack developer."
 ]
 
 POST_PROMPT = "Tweet must have maximum 280 characters. Add hastag #fullstack #programming"

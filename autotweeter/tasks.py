@@ -8,6 +8,8 @@ def post_tweet():
     print("sending tweet")
     try:
         postMyTweet()
+
+        return 1
     except Exception as err:
         print(err)
 

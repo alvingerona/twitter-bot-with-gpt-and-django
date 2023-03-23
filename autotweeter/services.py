@@ -87,8 +87,14 @@ def makeCompletion():
     api = openaiInstanceOfAPI()
 
     # chooce 1 randomly from the list of prompts
-    prompt = "Write a tweet about: " + \
-        random.choice(PROMPT_LIST) + " " + POST_PROMPT
+    # prompt = " " + \
+    #    random.choice(PROMPT_LIST) + " " + POST_PROMPT
+    prompt = "Write a tweet, each tweet must be pick topic differently from the list. Don't tweet with bullet number. Write a tweet about any of these topics:\n\n"
+
+    for index, topic in enumerate(PROMPT_LIST):
+        prompt += str(index + 1) + "." + topic + "\n"
+
+    prompt += "\n" + POST_PROMPT
 
     # request for a completion from the OpenAPI
     results = api.Completion.create(
@@ -104,7 +110,7 @@ def makeCompletion():
 
     str_tweets = []
     for choice in results:
-        str_tweets.append(choice['text'].lstrip("\n"))
+        str_tweets.append(choice['text'].lstrip("\n").strip())
 
     # every time a completion request is made, save it as tweet
     saveTweets(str_tweets)
